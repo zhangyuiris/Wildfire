@@ -30,6 +30,7 @@ export default {
       console.log('init')
     },
     start () {
+      this.$store.commit('restart')
       this.$router.push('/index')
     },
     progressBar () {

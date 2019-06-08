@@ -57,7 +57,10 @@ export default {
   align-items left
   height 100px
   padding-left 6px
+  padding-right 6px
   overflow-x scroll
+.track::-webkit-scrollbar
+  width 0 !important
 .block
   background-color none
   width 55px

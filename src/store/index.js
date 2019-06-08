@@ -55,6 +55,16 @@ export default new Vuex.Store({
       state.round++
       console.log(state.convey)
     },
+    restart (state) {
+      state = {
+        round: 0,
+        loading: true,
+        convey: [],
+        map: [],
+        conveyChoose: {},
+        mapChoose: {}
+      }
+    },
     initMap (state) {
       let map = []
       for (let i = 0; i < 6; i++) {
