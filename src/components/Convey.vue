@@ -1,12 +1,14 @@
 <template>
   <div class="convey">
-    <div class="track">
-      <div v-for="(item, index) in convey" :key="index" class="block">
-        <transition>
-          <a @click="clickConvey(index, item.code)">
-            <img :src="'../../static/' + item.code + '.png'" height="100%" ondragstart="return false;" alt=""/>
-          </a>
-        </transition>
+    <div class="bg">
+      <div class="track">
+        <div v-for="(item, index) in convey" :key="index" class="block">
+          <transition>
+            <a @click="clickConvey(index, item.code)">
+              <img :src="'../../static/' + item.code + '.png'" height="100%" ondragstart="return false;" alt=""/>
+            </a>
+          </transition>
+        </div>
       </div>
     </div>
   </div>
@@ -37,20 +39,25 @@ export default {
 
 <style lang="stylus" scoped>
 .convey
+  padding-top 30px
+  display flex
+  justify-content center
+.bg
   user-select none
-  padding 20px
+  width 654px
+  background-image  url("../../static/dai.png")
+  background-size  654px, 100px
+  background-position  center center
 .track
-  display: flex
+  display flex
   flex-direction row
   align-items left
-  padding 10px
-  height 80px
-  background-color saddlebrown
+  height 100px
+  padding-left 6px
   overflow-x scroll
 .block
   background-color none
-  margin-right 10px
-  width 60px
-  height 60px
-  padding 10px
+  width 55px
+  height 55px
+  padding 15px 6px 10px 10px
 </style>
