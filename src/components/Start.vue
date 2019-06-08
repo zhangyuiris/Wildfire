@@ -39,7 +39,6 @@ export default {
       const that = this
       let interval = setInterval(function () {
         that.progress += Math.floor(Math.random() * 3 + 1)
-        console.log(that.progress, 'a')
         if (that.progress > 98) {
           that.progress = 100
           that.show = !that.show

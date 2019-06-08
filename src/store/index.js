@@ -13,14 +13,14 @@ let swamp = new Element('沼泽', 'swamp', false, 0, false)
 let object = [dust, wood, ice, fire, water]
 
 let mapping = {
-  grass: grass,
-  fire: fire,
-  ice: ice,
-  dust: dust,
-  wood: dust,
-  stone: stone,
-  water: water,
-  swamp: swamp
+  'grass': grass,
+  'fire': fire,
+  'ice': ice,
+  'dust': dust,
+  'wood': dust,
+  'stone': stone,
+  'water': water,
+  'swamp': swamp
 }
 Vue.use(Vuex)
 
@@ -31,7 +31,8 @@ export default new Vuex.Store({
     convey: [],
     map: [],
     conveyChoose: {},
-    mapChoose: {}
+    mapChoose: {},
+    dialogOpen: true
   },
   getters: {
     getConvey (state) {
@@ -42,6 +43,9 @@ export default new Vuex.Store({
     }
   },
   mutations: {
+    openDialog (state) {
+      state.dialogOpen = true
+    },
     refreshConvey (state) {
       for (let i = 0; i < 3; i++) {
         if (state.round > 2) {
@@ -122,28 +126,28 @@ export default new Vuex.Store({
             Vue.set(
               state.map[row],
               col - 1,
-              mapping[add(state.map[row][col - 1], water)]
+              mapping[add(state.map[row][col - 1].code, 'water')]
             )
           }
           if (col + 1 < state.map[0].length) {
             Vue.set(
               state.map[row],
               col + 1,
-              mapping[add(state.map[row][col + 1], water)]
+              mapping[add(state.map[row][col + 1].code, 'water')]
             )
           }
           if (row - 1 >= 0) {
             Vue.set(
               state.map[row - 1],
               col,
-              mapping[add(state.map[row - 1][col], water)]
+              mapping[add(state.map[row - 1][col].code, 'water')]
             )
           }
           if (row + 1 < state.map.length) {
             Vue.set(
               state.map[row + 1],
               col,
-              mapping[add(state.map[row + 1][col], water)]
+              mapping[add(state.map[row + 1][col].code, 'water')]
             )
           }
         } else {

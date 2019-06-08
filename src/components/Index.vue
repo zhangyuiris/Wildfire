@@ -9,6 +9,11 @@
         <img src="../../static/next.png" style="width: 100px;padding-top: 250px">
       </div>
     </el-col>
+    <div width="30%" class="modal">
+      <span slot="footer" class="dialog-footer">
+        <el-button type="primary" @click="play()">确 定</el-button>
+      </span>
+    </div>
   </el-row>
 </template>
 
@@ -19,7 +24,10 @@ export default {
   name: 'Index',
   components: { Maps, Convey },
   data () {
-    return {}
+    return {
+      // success: this.$store.state.dialogOpen.
+      dialogVisible: this.$store.state.dialogOpen
+    }
   },
   methods: {
     init () {
