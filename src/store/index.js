@@ -6,10 +6,10 @@ Vue.use(Vuex)
 export default new Vuex.Store({
   state: {
     loading: true,
-    convey: [ {name: 'fire'}, {name: 'fire'}, {name: 'fire'}, {name: 'fire'} ],
-    array: [],
-    conveyChoose: '',
-    mapChoose: ''
+    convey: [],
+    map: [],
+    conveyChoose: {},
+    mapChoose: {}
   },
   getters: {
     getConvey (state) {
@@ -17,12 +17,15 @@ export default new Vuex.Store({
     }
   },
   mutations: {
-    setMapChoose (state, name) {
-      state.mapChoose = name
+    initConvey (state, name) {
     },
-    setConveyChoose (state, newState) {
-      state.conveyChoose = newState.name
-      // state.convey.splice(newState.index, 1)
+    initMap (state, name) {
+    },
+    setMapChoose (state, mapChoose) {
+      state.mapChoose = mapChoose
+    },
+    setConveyChoose (state, conveyChoose) {
+      state.conveyChoose = conveyChoose
     }
   },
   actions: {

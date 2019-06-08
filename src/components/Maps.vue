@@ -1,6 +1,6 @@
 <template>
   <div class="maps">
-    <div v-for="(col, index) in array" :key="index + 'row'" class="row">
+    <div v-for="(col, index) in map" :key="index + 'row'" class="row">
       <div v-for="(item, i) in col" :key="i + 'col'" class="col">
         <div class="dock" :style="{backgroundImage: 'url(../../static/' + 'logo' + '.png)', backgroundSize: '100%', backgroundPosition: 'center center'}">
           <a @click="clickMap(index, i, item.name)">
@@ -18,14 +18,7 @@ export default {
   data () {
     return {
       row: 6,
-      array: [
-        [ {name: 'fire', countStand: 4}, {name: 'fire'}, {name: 'fire'}, {name: 'fire'}, {name: 'fire'}, {name: 'fire'} ],
-        [ {name: 'fire'}, {name: 'fire'}, {name: 'fire'}, {name: 'fire'}, {name: 'fire'}, {name: 'fire'} ],
-        [ {name: 'fire'}, {name: 'fire'}, {name: 'fire'}, {name: 'fire'}, {name: 'fire'}, {name: 'fire'} ],
-        [ {name: 'fire'}, {name: 'fire'}, {name: 'fire'}, {name: 'fire'}, {name: 'fire'}, {name: 'fire'} ],
-        [ {name: 'fire'}, {name: 'fire'}, {name: 'fire'}, {name: 'fire'}, {name: 'fire'}, {name: 'fire'} ],
-        [ {name: 'fire'}, {name: 'fire'}, {name: 'fire'}, {name: 'fire'}, {name: 'fire'}, {name: 'fire'} ]
-      ]
+      map: this.$store.state.map
     }
   },
   methods: {
@@ -34,7 +27,7 @@ export default {
     },
     clickMap (row, col, name) {
       console.log(row, col, name)
-      this.$store.commit('setMapChoose', name)
+      this.$store.commit('setMapChoose', {row: row, col: col, name: name})
     }
   },
   created () {
