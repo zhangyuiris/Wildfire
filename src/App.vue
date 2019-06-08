@@ -21,8 +21,6 @@ export default {
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: black;
-  display: flex;
-  justify-content: center;
   box-sizing: border-box;
   -webkit-touch-callout: none;
   -webkit-user-select: none;

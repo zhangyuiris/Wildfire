@@ -5,7 +5,7 @@
         <div v-for="(item, index) in convey" :key="index" class="block">
           <transition>
             <a @click="clickConvey(index, item.code)">
-              <img :src="'../../static/' + item.code + '.png'" height="100%" ondragstart="return false;" alt=""/>
+              <img :src="'../../static/el-' + item.code + '.png'" height="100%" ondragstart="return false;" alt=""/>
             </a>
           </transition>
         </div>
