@@ -4,7 +4,12 @@
       <div v-for="(item, index) in convey" :key="index" class="block">
         <transition>
           <a @click="clickConvey(index, item.code)">
-            <img :src="'../../static/' + item.code + '.png'" height="100%" ondragstart="return false;" alt=""/>
+            <img
+              :src="'../../static/' + item.code + '.png'"
+              height="100%"
+              ondragstart="return false;"
+              alt
+            >
           </a>
         </transition>
       </div>
@@ -24,8 +29,9 @@ export default {
     init () {
       console.log('convey init')
     },
-    clickConvey (index, name) {
-      this.$store.commit('setConveyChoose', {index: index, name: name})
+    clickConvey (index, code) {
+      console.log({ index, code })
+      this.$store.commit('setConveyChoose', { index: index, code: code })
     }
   },
   created () {
@@ -36,21 +42,26 @@ export default {
 </script>
 
 <style lang="stylus" scoped>
-.convey
-  user-select none
-  padding 20px
-.track
-  display: flex
-  flex-direction row
-  align-items left
-  padding 10px
-  height 80px
-  background-color saddlebrown
-  overflow-x scroll
-.block
-  background-color none
-  margin-right 10px
-  width 60px
-  height 60px
-  padding 10px
+.convey {
+  user-select: none;
+  padding: 20px;
+}
+
+.track {
+  display: flex;
+  flex-direction: row;
+  align-items: left;
+  padding: 10px;
+  height: 80px;
+  background-color: saddlebrown;
+  overflow-x: scroll;
+}
+
+.block {
+  background-color: none;
+  margin-right: 10px;
+  width: 60px;
+  height: 60px;
+  padding: 10px;
+}
 </style>
