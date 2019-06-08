@@ -111,13 +111,12 @@ export default new Vuex.Store({
     },
     setMapChoose (state, mapChoose) {
       state.mapChoose = mapChoose
-      let conveyChoose = state.conveyChoose
       let col = mapChoose.col
       let row = mapChoose.row
       console.log({ row, col })
       if (state.conveyChoose.code) {
-        let result = add(conveyChoose.code, mapChoose.code)
-        if (conveyChoose.code === 'ice' && mapChoose.code === 'fire') {
+        let result = add(state.conveyChoose.code, mapChoose.code)
+        if (state.conveyChoose.code === 'ice' && mapChoose.code === 'fire') {
           Vue.set(state.map[row], col, water)
           if (col - 1 >= 0) {
             Vue.set(
@@ -147,10 +146,12 @@ export default new Vuex.Store({
               mapping[add(state.map[row + 1][col], water)]
             )
           }
+        } else {
+          Vue.set(state.map[row], col, mapping[result])
         }
         Vue.set(state.map[row], col, mapping[result])
-        state.conveyChoose = {}
         state.convey.splice(state.conveyChoose.index, 1)
+        state.conveyChoose = {}
       }
     },
     setConveyChoose (state, conveyChoose) {
