@@ -2,7 +2,7 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import Index from '@/components/Index'
 import Start from '@/components/Start'
-
+import store from '../store/index'
 Vue.use(Router)
 const routes = [
   {
@@ -23,7 +23,8 @@ const router = new Router({
 
 router.beforeEach((to, from, next) => {
   if (from.path === '/index' && to.path === '/') {
-    if (from.params === 'finished') {
+    console.log(store)
+    if (store.getters.getWinDialog === true || store.getters.getLoseDialog === true) {
       next()
     }
   } else {

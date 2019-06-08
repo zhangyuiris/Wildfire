@@ -32,7 +32,8 @@ export default new Vuex.Store({
     map: [],
     conveyChoose: {},
     mapChoose: {},
-    dialogOpen: true
+    dialogWinOpen: false,
+    dialogLoseOpen: false
   },
   getters: {
     getConvey (state) {
@@ -40,11 +41,25 @@ export default new Vuex.Store({
     },
     getMap (state) {
       return state.map
+    },
+    getWinDialog (state) {
+      return state.dialogWinOpen
+    },
+    getLoseDialog (state) {
+      return state.dialogLoseOpen
     }
   },
   mutations: {
-    openDialog (state) {
-      state.dialogOpen = true
+    openDialog (state, type) {
+      if (type === 'win') {
+        state.dialogWinOpen = true
+      } else {
+        state.dialogLoseOpen = true
+      }
+    },
+    closeDialog (state) {
+      state.dialogWinOpen = false
+      state.dialogLoseOpen = false
     },
     refreshConvey (state) {
       for (let i = 0; i < 3; i++) {

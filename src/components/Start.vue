@@ -35,7 +35,7 @@ export default {
     },
     progressBar () {
       this.progress = 1
-      let timeout = Math.floor(Math.random() * 20 + 20) * 3
+      let timeout = Math.floor(Math.random() * 20 + 20)
       const that = this
       let interval = setInterval(function () {
         that.progress += Math.floor(Math.random() * 3 + 1)
