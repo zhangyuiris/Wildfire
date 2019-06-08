@@ -10,7 +10,7 @@ let stone = new Element('石', 'stone', true, 3, false)
 let water = new Element('水', 'water', false, 0, false)
 let swamp = new Element('沼泽', 'swamp', false, 0, false)
 
-let object = [dust, wood, ice]
+let object = [dust, wood, ice, fire, water]
 
 let mapping = {
   grass: grass,
@@ -45,7 +45,7 @@ export default new Vuex.Store({
     refreshConvey (state) {
       for (let i = 0; i < 3; i++) {
         if (state.round > 2) {
-          let a = Math.floor(Math.random() * 10) % 3
+          let a = Math.floor(Math.random() * 10) % 5
           state.convey.push(object[a])
         } else {
           let a = Math.floor(Math.random() * 10) % 2
@@ -54,6 +54,16 @@ export default new Vuex.Store({
       }
       state.round++
       console.log(state.convey)
+    },
+    restart (state) {
+      state = {
+        round: 0,
+        loading: true,
+        convey: [],
+        map: [],
+        conveyChoose: {},
+        mapChoose: {}
+      }
     },
     initMap (state) {
       let map = []

@@ -1,18 +1,16 @@
 <template>
-  <div class="convey">
+  <div class="convey animated bounceInDown">
     <div class="bg">
       <div class="track">
         <div v-for="(item, index) in convey" :key="index" class="block">
-          <transition>
-            <a @click="clickConvey(index, item.code)">
-              <img
-                :src="'../../static/el-' + item.code + '.png'"
-                height="100%"
-                ondragstart="return false;"
-                alt
-              >
-            </a>
-          </transition>
+          <a @click="clickConvey(index, item.code)">
+            <img
+              :src="'../../static/el-' + item.code + '.png'"
+              height="100%"
+              ondragstart="return false;"
+              alt
+            >
+          </a>
         </div>
       </div>
     </div>
@@ -63,7 +61,12 @@ export default {
   align-items: left;
   height: 100px;
   padding-left: 6px;
+  padding-right: 6px;
   overflow-x: scroll;
+}
+
+.track::-webkit-scrollbar {
+  width: 0 !important;
 }
 
 .block {

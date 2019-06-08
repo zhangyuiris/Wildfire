@@ -1,5 +1,5 @@
 <template>
-  <div class="bg">
+  <div class="bg animated bounceInUp">
     <div class="maps">
       <div class="block">
         <div v-for="(col, index) in map" :key="index + 'row'" class="row">
