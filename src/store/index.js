@@ -7,15 +7,20 @@ let ice = new Element('冰', 'ice', false, 0, false)
 let dust = new Element('土', 'dust', true, 0, false)
 let wood = new Element('木', 'wood', true, 0, false)
 let stone = new Element('石', 'stone', true, 3, false)
+let water = new Element('水', 'water', false, 0, false)
+let swamp = new Element('沼泽', 'swamp', false, 0, false)
 
 let object = [ dust, wood, ice ]
+
 let mapping = {
   'grass': grass,
   'fire': fire,
   'ice': ice,
   'dust': dust,
   'wood': dust,
-  'stone': stone
+  'stone': stone,
+  'water': water,
+  'swamp': swamp
 }
 Vue.use(Vuex)
 
