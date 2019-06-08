@@ -3,8 +3,8 @@
     <div v-for="(col, index) in map" :key="index + 'row'" class="row">
       <div v-for="(item, i) in col" :key="i + 'col'" class="col">
         <div class="dock" :style="{backgroundImage: 'url(../../static/' + 'logo' + '.png)', backgroundSize: '100%', backgroundPosition: 'center center'}">
-          <a @click="clickMap(index, i, item.name)">
-            <img :src="'../../static/' + item.name + '.png'" :width="item.countStand / 5 * 60" :height="item.countStand / 5 * 60"  ondragstart="return false;" alt=""/>
+          <a @click="clickMap(index, i, item.code)">
+            <img :src="'../../static/' + item.code + '.png'" width="100%" height="100%" ondragstart="return false;" alt=""/>
           </a>
         </div>
       </div>
@@ -24,14 +24,16 @@ export default {
   methods: {
     init () {
       console.log('map init')
+      this.$store.commit('initMap')
     },
     clickMap (row, col, name) {
       console.log(row, col, name)
       this.$store.commit('setMapChoose', {row: row, col: col, name: name})
     }
   },
-  created () {
+  async created () {
     this.init()
+    this.map = await this.$store.state.map
   }
 }
 </script>
@@ -48,5 +50,4 @@ export default {
   display flex
   justify-content center
   vertical-align center
-  padding 10px
 </style>

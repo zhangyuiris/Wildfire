@@ -1,10 +1,27 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
+import { Element } from '../util'
+let grass = new Element('草坪', 'grass', true, 0, false)
+let fire = new Element('火', 'fire', true, 0, false)
+let ice = new Element('冰', 'ice', false, 0, false)
+let dust = new Element('土', 'dust', true, 0, false)
+let wood = new Element('木', 'wood', true, 0, false)
+let stone = new Element('石', 'stone', true, 3, false)
 
+let object = [ dust, wood, ice ]
+let mapping = {
+  'grass': grass,
+  'fire': fire,
+  'ice': ice,
+  'dust': dust,
+  'wood': dust,
+  'stone': stone
+}
 Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
+    round: 0,
     loading: true,
     convey: [],
     map: [],
@@ -14,12 +31,68 @@ export default new Vuex.Store({
   getters: {
     getConvey (state) {
       return state.convey
+    },
+    getMap (state) {
+      return state.map
     }
   },
   mutations: {
-    initConvey (state, name) {
+    refreshConvey (state) {
+      for (let i = 0; i < 3; i++) {
+        if (state.round > 2) {
+          let a = Math.floor(Math.random() * 10) % 3
+          state.convey.push(object[a])
+        } else {
+          let a = Math.floor(Math.random() * 10) % 2
+          state.convey.push(object[a])
+        }
+      }
+      state.round++
+      console.log(state.convey)
     },
-    initMap (state, name) {
+    initMap (state) {
+      let map = []
+      for (let i = 0; i < 6; i++) {
+        let col = []
+        for (let i = 0; i < 9; i++) {
+          col.push(grass)
+        }
+        map.push(col)
+      }
+      let y = Math.floor(Math.random() * 10) % 8 + 1
+      let x = Math.floor(Math.random() * 10) % 4 + 1
+      let _position = Math.floor(Math.random() * 10) % 6
+      map[x][y] = fire
+      switch (_position) {
+        case 0:
+          map[x][y - 1] = fire
+          map[x][y + 1] = fire
+          break
+        case 1:
+          map[x - 1][y] = fire
+          map[x + 1][y] = fire
+          break
+        case 2:
+          map[x][y - 1] = fire
+          map[x + 1][y] = fire
+          break
+        case 3:
+          map[x - 1][y] = fire
+          map[x][y + 1] = fire
+          break
+        case 4:
+          map[x - 1][y] = fire
+          map[x][y - 1] = fire
+          break
+        case 5:
+          map[x + 1][y] = fire
+          map[x][y + 1] = fire
+          break
+        default:
+          break
+      }
+      console.log(map)
+      state.map = map
     },
     setMapChoose (state, mapChoose) {
       state.mapChoose = mapChoose
