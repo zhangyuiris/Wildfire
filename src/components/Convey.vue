@@ -31,8 +31,8 @@ export default {
     init () {
       console.log('convey init')
     },
-    clickConvey (index, name) {
-      this.$store.commit('setConveyChoose', {index: index, name: name})
+    clickConvey (index, code) {
+      this.$store.commit('setConveyChoose', { index: index, code: code })
     }
   },
   created () {
@@ -43,26 +43,33 @@ export default {
 </script>
 
 <style lang="stylus" scoped>
-.convey
-  padding-top 30px
-  display flex
-  justify-content center
-.bg
-  user-select none
-  width 654px
-  background-image  url("../../static/dai.png")
-  background-size  654px, 100px
-  background-position  center center
-.track
-  display flex
-  flex-direction row
-  align-items left
-  height 100px
-  padding-left 6px
-  overflow-x scroll
-.block
-  background-color none
-  width 55px
-  height 55px
-  padding 15px 6px 10px 10px
+.convey {
+  padding-top: 30px;
+  display: flex;
+  justify-content: center;
+}
+
+.bg {
+  user-select: none;
+  width: 654px;
+  background-image: url('../../static/dai.png');
+  background-size: 654px, 100px;
+  background-position: center center;
+}
+
+.track {
+  display: flex;
+  flex-direction: row;
+  align-items: left;
+  height: 100px;
+  padding-left: 6px;
+  overflow-x: scroll;
+}
+
+.block {
+  background-color: none;
+  width: 55px;
+  height: 55px;
+  padding: 15px 6px 10px 10px;
+}
 </style>

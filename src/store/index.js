@@ -2,7 +2,7 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 import { Element, add } from '../util'
 let grass = new Element('草坪', 'grass', true, 0, false)
-let fire = new Element('火', 'fire', true, 0, false)
+let fire = new Element('火', 'fire', true, 0, true)
 let ice = new Element('冰', 'ice', false, 0, false)
 let dust = new Element('土', 'dust', true, 0, false)
 let wood = new Element('木', 'wood', true, 0, false)
@@ -104,20 +104,19 @@ export default new Vuex.Store({
       let conveyChoose = state.conveyChoose
       let col = mapChoose.col
       let row = mapChoose.row
+      console.log({ row, col })
       if (state.conveyChoose.code) {
         let result = add(conveyChoose.code, mapChoose.code)
         if (conveyChoose.code === 'ice' && mapChoose.code === 'fire') {
-          state.map[row][col] = water
+          Vue.set(state.map[row], col, water)
           if (col - 1 >= 0) {
-            state.map[row][col - 1] =
-              mapping[add(state.map[row][col - 1], water)]
             Vue.set(
               state.map[row],
               col - 1,
               mapping[add(state.map[row][col - 1], water)]
             )
           }
-          if (col + 1 <= state.map[0].length) {
+          if (col + 1 < state.map[0].length) {
             Vue.set(
               state.map[row],
               col + 1,
@@ -131,7 +130,7 @@ export default new Vuex.Store({
               mapping[add(state.map[row - 1][col], water)]
             )
           }
-          if (row + 1 <= state.map.length) {
+          if (row + 1 < state.map.length) {
             Vue.set(
               state.map[row + 1],
               col,
@@ -140,13 +139,100 @@ export default new Vuex.Store({
           }
         }
         Vue.set(state.map[row], col, mapping[result])
-        conveyChoose = {}
+        state.conveyChoose = {}
         state.convey.splice(state.conveyChoose.index, 1)
-        console.log(state.map[row][col])
       }
     },
     setConveyChoose (state, conveyChoose) {
       state.conveyChoose = conveyChoose
+    },
+    systemRound (state) {
+      let randomCellList = []
+      let factorSum = 0
+      for (let i = 0; i < state.map.length; i++) {
+        for (let j = 0; j < state.map[i].length; j++) {
+          if (state.map[i][j].isFired) {
+            if (
+              i - 1 >= 0 &&
+              !state.map[i - 1][j].isFired &&
+              (state.map[i - 1][j].code !== 'water' ||
+                state.map[i - 1][j].code !== 'swamp')
+            ) {
+              let factor = 1
+              if (state.map[i - 1][j].code === 'wood') {
+                factor = 3
+              }
+              factorSum += factor
+              randomCellList.push({ row: i - 1, col: j, factor })
+            }
+
+            if (
+              i + 1 < state.map.length &&
+              !state.map[i + 1][j].isFired &&
+              (state.map[i + 1][j].code !== 'water' ||
+                state.map[i + 1][j].code !== 'swamp')
+            ) {
+              let factor = 1
+              if (state.map[i + 1][j].code === 'wood') {
+                factor = 3
+              }
+              factorSum += factor
+              randomCellList.push({ row: i + 1, col: j, factor })
+            }
+
+            if (
+              j - 1 >= 0 &&
+              !state.map[i][j - 1].isFired &&
+              (state.map[i][j - 1].code !== 'water' ||
+                state.map[i][j - 1].code !== 'swamp')
+            ) {
+              let factor = 1
+              if (state.map[i][j - 1].code === 'wood') {
+                factor = 3
+              }
+              factorSum += factor
+              randomCellList.push({ row: i, col: j - 1, factor })
+            }
+
+            if (
+              j + 1 < state.map[i].length &&
+              !state.map[i][j + 1].isFired &&
+              (state.map[i][j + 1].code !== 'water' ||
+                state.map[i][j + 1].code !== 'swamp')
+            ) {
+              let factor = 1
+              if (state.map[i][j + 1].code === 'wood') {
+                factor = 3
+              }
+              factorSum += factor
+              randomCellList.push({ row: i, col: j + 1, factor })
+            }
+          }
+        }
+      }
+      const totalCount = Number.parseInt((randomCellList.length / 4).toFixed(0))
+      console.log(`totalCount: ${totalCount}`)
+      for (let i = 0; i < totalCount; i++) {
+        let random = Number.parseInt((Math.random() * factorSum).toFixed(0))
+
+        for (let j = 0; j < randomCellList.length; j++) {
+          random -= randomCellList[j].factor
+          if (random <= 0) {
+            factorSum -= randomCellList[j].factor
+            console.log({
+              row: randomCellList[j].row,
+              col: randomCellList[j].col
+            })
+            Vue.set(
+              state.map[randomCellList[j].row],
+              randomCellList[j].col,
+              fire
+            )
+            randomCellList.splice(j, 1)
+            break
+          }
+        }
+      }
     }
   },
   actions: {}

@@ -28,6 +28,8 @@ export default {
       console.log('init')
     },
     click () {
+      this.$store.commit('systemRound')
+      this.$store.commit('refreshConvey')
     }
   },
   created () {
