@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
-import { Element } from '../util'
+import { Element, add } from '../util'
 let grass = new Element('草坪', 'grass', true, 0, false)
 let fire = new Element('火', 'fire', true, 0, false)
 let ice = new Element('冰', 'ice', false, 0, false)
@@ -10,17 +10,17 @@ let stone = new Element('石', 'stone', true, 3, false)
 let water = new Element('水', 'water', false, 0, false)
 let swamp = new Element('沼泽', 'swamp', false, 0, false)
 
-let object = [ dust, wood, ice ]
+let object = [dust, wood, ice]
 
 let mapping = {
-  'grass': grass,
-  'fire': fire,
-  'ice': ice,
-  'dust': dust,
-  'wood': dust,
-  'stone': stone,
-  'water': water,
-  'swamp': swamp
+  grass: grass,
+  fire: fire,
+  ice: ice,
+  dust: dust,
+  wood: dust,
+  stone: stone,
+  water: water,
+  swamp: swamp
 }
 Vue.use(Vuex)
 
@@ -64,8 +64,8 @@ export default new Vuex.Store({
         }
         map.push(col)
       }
-      let y = Math.floor(Math.random() * 10) % 8 + 1
-      let x = Math.floor(Math.random() * 10) % 4 + 1
+      let y = (Math.floor(Math.random() * 10) % 8) + 1
+      let x = (Math.floor(Math.random() * 10) % 4) + 1
       let _position = Math.floor(Math.random() * 10) % 6
       map[x][y] = fire
       switch (_position) {
@@ -101,11 +101,53 @@ export default new Vuex.Store({
     },
     setMapChoose (state, mapChoose) {
       state.mapChoose = mapChoose
+      let conveyChoose = state.conveyChoose
+      let col = mapChoose.col
+      let row = mapChoose.row
+      if (state.conveyChoose.code) {
+        let result = add(conveyChoose.code, mapChoose.code)
+        if (conveyChoose.code === 'ice' && mapChoose.code === 'fire') {
+          state.map[row][col] = water
+          if (col - 1 >= 0) {
+            state.map[row][col - 1] =
+              mapping[add(state.map[row][col - 1], water)]
+            Vue.set(
+              state.map[row],
+              col - 1,
+              mapping[add(state.map[row][col - 1], water)]
+            )
+          }
+          if (col + 1 <= state.map[0].length) {
+            Vue.set(
+              state.map[row],
+              col + 1,
+              mapping[add(state.map[row][col + 1], water)]
+            )
+          }
+          if (row - 1 >= 0) {
+            Vue.set(
+              state.map[row - 1],
+              col,
+              mapping[add(state.map[row - 1][col], water)]
+            )
+          }
+          if (row + 1 <= state.map.length) {
+            Vue.set(
+              state.map[row + 1],
+              col,
+              mapping[add(state.map[row + 1][col], water)]
+            )
+          }
+        }
+        Vue.set(state.map[row], col, mapping[result])
+        conveyChoose = {}
+        state.convey.splice(state.conveyChoose.index, 1)
+        console.log(state.map[row][col])
+      }
     },
     setConveyChoose (state, conveyChoose) {
       state.conveyChoose = conveyChoose
     }
   },
-  actions: {
-  }
+  actions: {}
 })

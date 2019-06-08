@@ -19,10 +19,9 @@ import Convey from './Convey'
 import Maps from './Maps'
 export default {
   name: 'Index',
-  components: {Maps, Convey},
+  components: { Maps, Convey },
   data () {
-    return {
-    }
+    return {}
   },
   methods: {
     init () {
@@ -38,7 +37,8 @@ export default {
 </script>
 
 <style lang="stylus" scoped>
-.container
-  align center
-  width 70%
+.container {
+  align: center;
+  width: 70%;
+}
 </style>

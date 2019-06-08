@@ -44,7 +44,7 @@ export function add (el1, el2) {
       return 'water'
     }
     if (el1 === 'water') {
-      return 'grass'
+      return 'water'
     }
     if (el1 === 'swamp') {
       return 'dust'
