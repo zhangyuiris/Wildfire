@@ -4,10 +4,21 @@
       <div class="block">
         <div v-for="(col, index) in map" :key="index + 'row'" class="row">
           <div v-for="(item, i) in col" :key="i + 'col'" class="col">
-            <div v-if="item.code">
+            <div v-if="item.code !== 'fire' ">
               <div class="dock" @click="clickMap(index, i, item.code)">
                 <img
                   :src="'../../static/' + item.code + '.png'"
+                  width="100%"
+                  height="100%"
+                  ondragstart="return false;"
+                  alt
+                >
+              </div>
+            </div>
+            <div v-else-if="item.code === 'fire' ">
+              <div class="dock" @click="clickMap(index, i, item.code)">
+                <img
+                  :src="'../../static/' + change + '.png'"
                   width="100%"
                   height="100%"
                   ondragstart="return false;"
@@ -30,11 +41,19 @@ export default {
   name: 'Maps',
   data () {
     return {
+      change: 'fire',
       row: 6,
       map: this.$store.state.map
     }
   },
   methods: {
+    checkWin () {
+      console.log(JSON.stringify(this.map).indexOf('fire'))
+      if (JSON.stringify(this.map).indexOf('fire') === -1) {
+        return true
+      }
+      return false
+    },
     init () {
       console.log('map init')
       this.$store.commit('initMap')
@@ -42,11 +61,22 @@ export default {
     clickMap (row, col, code) {
       console.log(row, col, code)
       this.$store.commit('setMapChoose', { row: row, col: col, code: code })
+      // if (this.checkWin()) {
+      this.$store.commit('openDialog')
+      // }
     }
   },
   async created () {
     this.init()
     this.map = await this.$store.state.map
+    const that = this
+    setInterval(function () {
+      if (that.change === 'fire') {
+        that.change = 'fire2'
+      } else {
+        that.change = 'fire'
+      }
+    }, 200)
   }
 }
 </script>
@@ -59,7 +89,7 @@ export default {
 }
 
 .block {
-  padding: 20px;
+  padding: 16px 17px 17px 16px
 }
 
 .maps {
@@ -76,9 +106,9 @@ export default {
 }
 
 .dock {
-  padding: 3px 5px 4px 4px;
-  width: 60px;
-  height: 60px;
+  /*padding: 0px 5px 0px 4px;*/
+  width: 68px;
+  height: 68px;
   display: flex;
   justify-content: center;
   vertical-align: center;

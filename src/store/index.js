@@ -17,7 +17,7 @@ let mapping = {
   'fire': fire,
   'ice': ice,
   'dust': dust,
-  'wood': dust,
+  'wood': wood,
   'stone': stone,
   'water': water,
   'swamp': swamp
