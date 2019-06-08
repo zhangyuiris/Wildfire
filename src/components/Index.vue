@@ -1,33 +1,33 @@
 <template>
-  <div class="hello">
+  <div class="container">
+    <Convey/>
+    <Maps/>
   </div>
 </template>
 
 <script>
+import Convey from './Convey'
+import Maps from './Maps'
 export default {
   name: 'Index',
+  components: {Maps, Convey},
   data () {
     return {
-      msg: 'Welcome to Your Vue.js App'
     }
+  },
+  methods: {
+    init () {
+      console.log('init')
+    }
+  },
+  created () {
+    this.init()
   }
 }
 </script>
 
-<!-- Add "scoped" attribute to limit CSS to this component only -->
-<style scoped>
-h1, h2 {
-  font-weight: normal;
-}
-ul {
-  list-style-type: none;
-  padding: 0;
-}
-li {
-  display: inline-block;
-  margin: 0 10px;
-}
-a {
-  color: #42b983;
-}
+<style lang="stylus" scoped>
+.container
+  text-align center
+  width 80%
 </style>
