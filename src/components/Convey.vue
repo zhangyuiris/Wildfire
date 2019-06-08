@@ -1,18 +1,16 @@
 <template>
-  <div class="convey">
+  <div class="convey animated bounceInDown">
     <div class="bg">
       <div class="track">
         <div v-for="(item, index) in convey" :key="index" class="block">
-          <transition>
-            <a @click="clickConvey(index, item.code)">
-              <img
-                :src="'../../static/el-' + item.code + '.png'"
-                height="100%"
-                ondragstart="return false;"
-                alt
-              >
-            </a>
-          </transition>
+          <a @click="clickConvey(index, item.code)">
+            <img
+              :src="'../../static/el-' + item.code + '.png'"
+              height="100%"
+              ondragstart="return false;"
+              alt
+            >
+          </a>
         </div>
       </div>
     </div>
@@ -31,8 +29,8 @@ export default {
     init () {
       console.log('convey init')
     },
-    clickConvey (index, name) {
-      this.$store.commit('setConveyChoose', {index: index, name: name})
+    clickConvey (index, code) {
+      this.$store.commit('setConveyChoose', {index: index, code: code})
     }
   },
   created () {

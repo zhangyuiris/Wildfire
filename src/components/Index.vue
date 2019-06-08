@@ -1,17 +1,15 @@
 <template>
-  <el-container style="width: 100vw">
-    <el-row>
-      <el-col :span="16" :offset="2">
-        <Convey/>
-        <Maps/>
-      </el-col>
-      <el-col :span="2">
-        <div class="next" @click="click()">
-          <img src="../../static/next.png" style="width: 100px">
-        </div>
-      </el-col>
-    </el-row>
-  </el-container>
+  <el-row style="width: 100vw">
+    <el-col :span="16" :offset="4">
+      <Convey/>
+      <Maps/>
+    </el-col>
+    <el-col :span="2">
+      <div class="next animated bounceInRight" @click="click()">
+        <img src="../../static/next.png" style="width: 100px;padding-top: 250px">
+      </div>
+    </el-col>
+  </el-row>
 </template>
 
 <script>
