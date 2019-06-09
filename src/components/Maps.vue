@@ -4,18 +4,7 @@
       <div class="block">
         <div v-for="(col, index) in map" :key="index + 'row'" class="row">
           <div v-for="(item, i) in col" :key="i + 'col'" class="col">
-            <div v-if="item.code !== 'fire' ">
-              <div class="dock" @click="clickMap(index, i, item.code)">
-                <img
-                  :src="'../../static/' + item.code + '.png'"
-                  width="100%"
-                  height="100%"
-                  ondragstart="return false;"
-                  alt
-                >
-              </div>
-            </div>
-            <div v-else-if="item.code === 'fire' ">
+            <div v-if="item.code === 'fire' ">
               <div class="dock" @click="clickMap(index, i, item.code)">
                 <img
                   :src="'../../static/' + change + '.png'"
@@ -26,8 +15,30 @@
                 >
               </div>
             </div>
-            <div v-else>
+            <div v-else-if="item.code === 'water' ">
+              <div class="dock" @click="clickMap(index, i, item.code)">
+                <img
+                  :src="'../../static/' + changeWater + '.png'"
+                  width="100%"
+                  height="100%"
+                  ondragstart="return false;"
+                  alt
+                >
+              </div>
+            </div>
+            <div v-else-if="item.code === 'grass' ">
               <div class="dock" @click="clickMap(index, i, 'grass')"></div>
+            </div>
+            <div v-else>
+              <div class="dock" @click="clickMap(index, i, item.code)">
+                <img
+                  :src="'../../static/' + item.code + '.png'"
+                  width="100%"
+                  height="100%"
+                  ondragstart="return false;"
+                  alt
+                >
+              </div>
             </div>
           </div>
         </div>
@@ -41,29 +52,45 @@ export default {
   name: 'Maps',
   data () {
     return {
-      change: 'fire',
+      change: 'fire3',
+      changeWater: 'water1',
       row: 6,
       map: this.$store.state.map
     }
   },
   methods: {
     checkWin () {
-      console.log(JSON.stringify(this.map).indexOf('fire'))
       if (JSON.stringify(this.map).indexOf('fire') === -1) {
         return true
       }
       return false
     },
+    check () {
+      if (JSON.stringify(this.map).indexOf('water') === -1) {
+        return true
+      }
+      return false
+    },
     init () {
-      console.log('map init')
       this.$store.commit('initMap')
     },
     clickMap (row, col, code) {
-      console.log(row, col, code)
       this.$store.commit('setMapChoose', { row: row, col: col, code: code })
-      // if (this.checkWin()) {
-      this.$store.commit('openDialog')
-      // }
+      let fire = 0
+      for (let i = 0; i < 6; i++) {
+        for (let j = 0; j < 9; j++) {
+          let col = this.map[i][j]
+          if (col.code === 'fire') {
+            fire++
+          }
+        }
+      }
+      if (fire === 0) {
+        this.$store.commit('openWinDialog')
+      }
+      if (fire === 54) {
+        this.$store.commit('openLoseDialog')
+      }
     }
   },
   async created () {
@@ -71,10 +98,15 @@ export default {
     this.map = await this.$store.state.map
     const that = this
     setInterval(function () {
-      if (that.change === 'fire') {
-        that.change = 'fire2'
+      if (that.change === 'fire3') {
+        that.change = 'fire4'
       } else {
-        that.change = 'fire'
+        that.change = 'fire3'
+      }
+      if (that.changeWater === 'water1') {
+        that.changeWater = 'water2'
+      } else {
+        that.changeWater = 'water1'
       }
     }, 200)
   }

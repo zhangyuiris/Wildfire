@@ -3,7 +3,7 @@
     <div class="bg">
       <div class="track">
         <div v-for="(item, index) in convey" :key="index" class="block">
-          <a @click="clickConvey(index, item.code)">
+          <a @click="clickConvey(index, item.code)"  :style="item.selected ? styles: {}">
             <img
               :src="'../../static/el-' + item.code + '.png'"
               height="100%"
@@ -22,6 +22,12 @@ export default {
   name: 'Convey',
   data () {
     return {
+      styles: {
+        'border': '4px solid #fee411',
+        'border-radius': '4px',
+        'padding-top': '40px',
+        'box-sizing': 'border-box'
+      },
       convey: this.$store.state.convey
     }
   },
@@ -36,6 +42,9 @@ export default {
   created () {
     this.init()
     this.$store.commit('refreshConvey')
+  },
+  destory () {
+    this.$store.commit('resetConvey')
   }
 }
 </script>
@@ -45,6 +54,7 @@ export default {
   padding-top: 30px;
   display: flex;
   justify-content: center;
+  box-sizing: border-box;
 }
 
 .bg {
@@ -60,8 +70,8 @@ export default {
   flex-direction: row;
   align-items: left;
   height: 100px;
-  padding-left: 6px;
-  padding-right: 6px;
+  padding-left: 10px;
+  padding-right: 10px;
   overflow-x: scroll;
 }
 
@@ -75,4 +85,8 @@ export default {
   height: 55px;
   padding: 15px 6px 10px 10px;
 }
+/*.block:hover {
+  background-color: rgba(0, 0, 0, 0.3);
+  background-clip: content-box;
+}*/
 </style>
