@@ -13,14 +13,14 @@ let swamp = new Element('沼泽', 'swamp', false, 0, false)
 let object = [dust, wood, ice, fire, water]
 
 let mapping = {
-  'grass': grass,
-  'fire': fire,
-  'ice': ice,
-  'dust': dust,
-  'wood': wood,
-  'stone': stone,
-  'water': water,
-  'swamp': swamp
+  grass: grass,
+  fire: fire,
+  ice: ice,
+  dust: dust,
+  wood: wood,
+  stone: stone,
+  water: water,
+  swamp: swamp
 }
 Vue.use(Vuex)
 
@@ -150,10 +150,52 @@ export default new Vuex.Store({
               mapping[add(state.map[row + 1][col].code, 'water')]
             )
           }
+        } else if (
+          state.conveyChoose.code === 'dust' &&
+          mapChoose.code === 'water'
+        ) {
+          let stack = []
+          stack.push({
+            row,
+            col
+          })
+          while (true) {
+            if (stack.length === 0) {
+              break
+            }
+            let el = stack.pop()
+            Vue.set(state.map[el.row], el.col, swamp)
+            if (
+              el.col - 1 >= 0 &&
+              state.map[el.row][el.col - 1].code === 'water'
+            ) {
+              stack.push({ row: el.row, col: el.col - 1 })
+            }
+
+            if (
+              el.col + 1 < state.map[0].length &&
+              state.map[el.row][el.col + 1].code === 'water'
+            ) {
+              stack.push({ row: el.row, col: el.col + 1 })
+            }
+
+            if (
+              el.row - 1 >= 0 &&
+              state.map[el.row - 1][el.col].code === 'water'
+            ) {
+              stack.push({ row: el.row - 1, col: el.col })
+            }
+
+            if (
+              el.row + 1 < state.map.length &&
+              state.map[el.row + 1][el.col].code === 'water'
+            ) {
+              stack.push({ row: el.row + 1, col: el.col })
+            }
+          }
         } else {
           Vue.set(state.map[row], col, mapping[result])
         }
-        Vue.set(state.map[row], col, mapping[result])
         state.convey.splice(state.conveyChoose.index, 1)
         state.conveyChoose = {}
       }
@@ -166,12 +208,27 @@ export default new Vuex.Store({
       let factorSum = 0
       for (let i = 0; i < state.map.length; i++) {
         for (let j = 0; j < state.map[i].length; j++) {
+          if (
+            state.map[i][j].code === 'stone' &&
+            state.map[i][j].remainRound > 0
+          ) {
+            Vue.set(
+              state.map[i][j],
+              'remainRound',
+              state.map[i][j].remainRound - 1
+            )
+            console.log({ remain: state.map[i][j].remainRound })
+          }
           if (state.map[i][j].isFired) {
             if (
               i - 1 >= 0 &&
               !state.map[i - 1][j].isFired &&
-              (state.map[i - 1][j].code !== 'water' ||
-                state.map[i - 1][j].code !== 'swamp')
+              state.map[i - 1][j].code !== 'water' &&
+              state.map[i - 1][j].code !== 'swamp' &&
+              !(
+                state.map[i - 1][j].code === 'stone' &&
+                state.map[i - 1][j].remainRound > 0
+              )
             ) {
               let factor = 1
               if (state.map[i - 1][j].code === 'wood') {
@@ -184,8 +241,12 @@ export default new Vuex.Store({
             if (
               i + 1 < state.map.length &&
               !state.map[i + 1][j].isFired &&
-              (state.map[i + 1][j].code !== 'water' ||
-                state.map[i + 1][j].code !== 'swamp')
+              state.map[i + 1][j].code !== 'water' &&
+              state.map[i + 1][j].code !== 'swamp' &&
+              !(
+                state.map[i + 1][j].code === 'stone' &&
+                state.map[i + 1][j].remainRound > 0
+              )
             ) {
               let factor = 1
               if (state.map[i + 1][j].code === 'wood') {
@@ -198,8 +259,12 @@ export default new Vuex.Store({
             if (
               j - 1 >= 0 &&
               !state.map[i][j - 1].isFired &&
-              (state.map[i][j - 1].code !== 'water' ||
-                state.map[i][j - 1].code !== 'swamp')
+              state.map[i][j - 1].code !== 'water' &&
+              state.map[i][j - 1].code !== 'swamp' &&
+              !(
+                state.map[i][j - 1].code === 'stone' &&
+                state.map[i][j - 1].remainRound > 0
+              )
             ) {
               let factor = 1
               if (state.map[i][j - 1].code === 'wood') {
@@ -212,8 +277,12 @@ export default new Vuex.Store({
             if (
               j + 1 < state.map[i].length &&
               !state.map[i][j + 1].isFired &&
-              (state.map[i][j + 1].code !== 'water' ||
-                state.map[i][j + 1].code !== 'swamp')
+              state.map[i][j + 1].code !== 'water' &&
+              state.map[i][j + 1].code !== 'swamp' &&
+              !(
+                state.map[i][j + 1].code === 'stone' &&
+                state.map[i][j + 1].remainRound > 0
+              )
             ) {
               let factor = 1
               if (state.map[i][j + 1].code === 'wood') {
@@ -245,6 +314,20 @@ export default new Vuex.Store({
             )
             randomCellList.splice(j, 1)
             break
+          }
+        }
+      }
+      for (let i = 0; i < state.map.length; i++) {
+        for (let j = 0; j < state.map[i].length; j++) {
+          if (
+            state.map[i][j].code === 'stone' &&
+            state.map[i][j].remainRound > 0
+          ) {
+            Vue.set(
+              state.map[i][j],
+              'remainRound',
+              state.map[i][j].remainRound - 1
+            )
           }
         }
       }
