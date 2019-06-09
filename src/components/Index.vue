@@ -7,7 +7,7 @@
       </el-col>
       <el-col :span="2">
         <div class="next animated bounceInRight" @click="click()">
-          <img src="../../static/next.png" style="width: 100px;padding-top: 250px">
+          <img src="../../static/next.png" style="width: 100px;padding-top: 300px">
         </div>
       </el-col>
     </el-row>
@@ -55,14 +55,13 @@ export default {
       this.$store.commit('refreshConvey')
     },
     play () {
-      this.$store.commit('closeDialog')
-      console.log('jjj')
       this.$router.push({
         path: '/',
         params: {
           finished: 'finished'
         }
       })
+      this.$store.commit('closeDialog')
     }
   },
   created () {

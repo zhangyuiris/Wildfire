@@ -50,16 +50,18 @@ export default new Vuex.Store({
     }
   },
   mutations: {
-    openDialog (state, type) {
-      if (type === 'win') {
-        state.dialogWinOpen = true
-      } else {
-        state.dialogLoseOpen = true
-      }
+    openWinDialog (state) {
+      state.dialogWinOpen = true
+    },
+    openLoseDialog (state) {
+      state.dialogLoseOpen = true
     },
     closeDialog (state) {
       state.dialogWinOpen = false
       state.dialogLoseOpen = false
+    },
+    resetConvey (state) {
+      state.convey = []
     },
     refreshConvey (state) {
       for (let i = 0; i < 3; i++) {

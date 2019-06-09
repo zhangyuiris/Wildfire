@@ -36,6 +36,9 @@ export default {
   created () {
     this.init()
     this.$store.commit('refreshConvey')
+  },
+  destory () {
+    this.$store.commit('resetConvey')
   }
 }
 </script>

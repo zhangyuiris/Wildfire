@@ -86,10 +86,10 @@ export default {
         }
       }
       if (fire === 0) {
-        this.$store.commit('openDialog', 'win')
+        this.$store.commit('openWinDialog')
       }
       if (fire === 54) {
-        this.$store.commit('openDialog', 'lose')
+        this.$store.commit('openLoseDialog')
       }
     }
   },
