@@ -10,7 +10,7 @@ let stone = new Element('石', 'stone', true, 3, false)
 let water = new Element('水', 'water', false, 0, false)
 let swamp = new Element('沼泽', 'swamp', false, 0, false)
 
-let object = [dust, wood, ice, fire, water]
+let object = [dust, wood, ice, fire]
 
 let mapping = {
   'grass': grass,
@@ -67,10 +67,14 @@ export default new Vuex.Store({
       for (let i = 0; i < 3; i++) {
         if (state.round > 2) {
           let a = Math.floor(Math.random() * 10) % 5
-          state.convey.push(object[a])
+          let obj = object[a]
+          obj.selected = false
+          state.convey.push(obj)
         } else {
           let a = Math.floor(Math.random() * 10) % 2
-          state.convey.push(object[a])
+          let obj = object[a]
+          obj.selected = false
+          state.convey.push(obj)
         }
       }
       state.round++
@@ -176,7 +180,12 @@ export default new Vuex.Store({
       }
     },
     setConveyChoose (state, conveyChoose) {
+      for (let i = 0; i < state.convey.length; i++) {
+        Vue.set(state.convey, i, {...state.convey[i], selected: false})
+      }
       state.conveyChoose = conveyChoose
+      Vue.set(state.convey, conveyChoose.index, {...state.convey[conveyChoose.index], selected: true})
+      console.log(state.convey[conveyChoose.index])
     },
     systemRound (state) {
       let randomCellList = []
