@@ -54,5 +54,13 @@ export function add (el1, el2) {
   if (el2 === 'water' && el1 === 'dust') {
     return 'swamp'
   }
+  if (el1 === 'swamp') {
+    if (el2 === 'water') {
+      return 'swamp'
+    }
+    if (el2 === 'dust') {
+      return 'swamp'
+    }
+  }
   return el2
 }

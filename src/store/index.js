@@ -233,7 +233,9 @@ export default new Vuex.Store({
     },
     systemRound (state) {
       let randomCellList = []
+      let swampRandomList = []
       let factorSum = 0
+      let swampFactorSum = 0
       for (let i = 0; i < state.map.length; i++) {
         for (let j = 0; j < state.map[i].length; j++) {
           if (
@@ -275,6 +277,83 @@ export default new Vuex.Store({
               'remainRound',
               state.map[i][j].remainRound - 1
             )
+          }
+          if (state.map[i][j].code === 'swamp') {
+            if (
+              i - 1 >= 0 &&
+              state.map[i - 1][j].code !== 'swamp' &&
+              state.map[i - 1][j].code !== 'fire' &&
+              state.map[i - 1][j].code !== 'ice' &&
+              state.map[i - 1][j].code !== 'wood' &&
+              state.map[i - 1][j].code !== 'stone'
+            ) {
+              let factor = 1
+              if (
+                state.map[i - 1][j].code === 'water' ||
+                state.map[i - 1][j].code === 'dust'
+              ) {
+                factor = 3
+              }
+              swampFactorSum += factor
+              swampRandomList.push({ row: i - 1, col: j, factor })
+            }
+
+            if (
+              i + 1 < state.map.length &&
+              state.map[i + 1][j].code !== 'swamp' &&
+              state.map[i + 1][j].code !== 'fire' &&
+              state.map[i + 1][j].code !== 'ice' &&
+              state.map[i + 1][j].code !== 'wood' &&
+              state.map[i + 1][j].code !== 'stone'
+            ) {
+              let factor = 1
+              if (
+                state.map[i + 1][j].code === 'water' ||
+                state.map[i + 1][j].code === 'dust'
+              ) {
+                factor = 3
+              }
+              swampFactorSum += factor
+              swampRandomList.push({ row: i + 1, col: j, factor })
+            }
+
+            if (
+              j - 1 >= 0 &&
+              state.map[i][j - 1].code !== 'swamp' &&
+              state.map[i][j - 1].code !== 'fire' &&
+              state.map[i][j - 1].code !== 'ice' &&
+              state.map[i][j - 1].code !== 'wood' &&
+              state.map[i][j - 1].code !== 'stone'
+            ) {
+              let factor = 1
+              if (
+                state.map[i][j - 1].code === 'water' ||
+                state.map[i][j - 1].code === 'dust'
+              ) {
+                factor = 3
+              }
+              swampFactorSum += factor
+              swampRandomList.push({ row: i, col: j - 1, factor })
+            }
+
+            if (
+              j + 1 < state.map[i].length &&
+              state.map[i][j + 1].code !== 'swamp' &&
+              state.map[i][j + 1].code !== 'fire' &&
+              state.map[i][j + 1].code !== 'ice' &&
+              state.map[i][j + 1].code !== 'wood' &&
+              state.map[i][j + 1].code !== 'stone'
+            ) {
+              let factor = 1
+              if (
+                state.map[i][j + 1].code === 'water' ||
+                state.map[i][j + 1].code === 'dust'
+              ) {
+                factor = 3
+              }
+              swampFactorSum += factor
+              swampRandomList.push({ row: i, col: j + 1, factor })
+            }
           }
           if (state.map[i][j].isFired) {
             if (
@@ -351,7 +430,7 @@ export default new Vuex.Store({
           }
         }
       }
-      const totalCount = Number.parseInt((randomCellList.length / 4).toFixed(0))
+      const totalCount = Number.parseInt(randomCellList.length.toFixed(0))
       console.log(`totalCount: ${totalCount}`)
       for (let i = 0; i < totalCount; i++) {
         let random = Number.parseInt((Math.random() * factorSum).toFixed(0))
@@ -374,6 +453,39 @@ export default new Vuex.Store({
               mapping[result]
             )
             randomCellList.splice(j, 1)
+            break
+          }
+        }
+      }
+
+      const swampTotalCount = Number.parseInt(
+        (swampRandomList.length / 2).toFixed(0)
+      )
+      console.log(`swampCount: ${swampTotalCount}`)
+      for (let i = 0; i < swampTotalCount; i++) {
+        let random = Number.parseInt(
+          (Math.random() * swampFactorSum).toFixed(0)
+        )
+
+        for (let j = 0; j < swampRandomList.length; j++) {
+          random -= swampRandomList[j].factor
+          if (random <= 0) {
+            swampFactorSum -= swampRandomList[j].factor
+            let result = add(
+              'swamp',
+              state.map[swampRandomList[j].row][swampRandomList[j].col].code
+            )
+            console.log(
+              `swamp + ${
+                state.map[swampRandomList[j].row][swampRandomList[j].col].code
+              } = ${result}`
+            )
+            Vue.set(
+              state.map[swampRandomList[j].row],
+              swampRandomList[j].col,
+              mapping[result]
+            )
+            swampRandomList.splice(j, 1)
             break
           }
         }
