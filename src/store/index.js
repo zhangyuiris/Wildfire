@@ -66,7 +66,7 @@ export default new Vuex.Store({
     refreshConvey (state) {
       for (let i = 0; i < 3; i++) {
         if (state.round > 2) {
-          let a = Math.floor(Math.random() * 10) % 5
+          let a = Math.floor(Math.random() * 10) % 4
           let obj = object[a]
           obj.selected = false
           state.convey.push(obj)
@@ -236,6 +236,36 @@ export default new Vuex.Store({
       let factorSum = 0
       for (let i = 0; i < state.map.length; i++) {
         for (let j = 0; j < state.map[i].length; j++) {
+          if (
+            state.map[i][j].code === 'water' ||
+            state.map[i][j].code === 'swamp'
+          ) {
+            let fireCount = 0
+            if (i - 1 >= 0 && state.map[i - 1][j].code === 'fire') {
+              fireCount++
+            }
+            if (
+              i + 1 < state.map.length &&
+              state.map[i + 1][j].code === 'fire'
+            ) {
+              fireCount++
+            }
+            if (j - 1 >= 0 && state.map[i][j - 1].code === 'fire') {
+              fireCount++
+            }
+            if (
+              j + 1 < state.map[i].length &&
+              state.map[i][j + 1].code === 'fire'
+            ) {
+              fireCount++
+            }
+            if (fireCount >= 2 && state.map[i][j].code === 'swamp') {
+              Vue.set(state.map[i], j, grass)
+            }
+            if (fireCount >= 3 && state.map[i][j].code === 'water') {
+              Vue.set(state.map[i], j, grass)
+            }
+          }
           if (
             state.map[i][j].code === 'stone' &&
             state.map[i][j].remainRound > 0
