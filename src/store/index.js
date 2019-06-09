@@ -138,7 +138,6 @@ export default new Vuex.Store({
       state.mapChoose = mapChoose
       let col = mapChoose.col
       let row = mapChoose.row
-      console.log({ row, col })
       if (state.conveyChoose.code) {
         let result = add(state.conveyChoose.code, mapChoose.code)
         if (state.conveyChoose.code === 'ice' && mapChoose.code === 'fire') {
@@ -223,10 +222,13 @@ export default new Vuex.Store({
     },
     setConveyChoose (state, conveyChoose) {
       for (let i = 0; i < state.convey.length; i++) {
-        Vue.set(state.convey, i, {...state.convey[i], selected: false})
+        Vue.set(state.convey, i, { ...state.convey[i], selected: false })
       }
       state.conveyChoose = conveyChoose
-      Vue.set(state.convey, conveyChoose.index, {...state.convey[conveyChoose.index], selected: true})
+      Vue.set(state.convey, conveyChoose.index, {
+        ...state.convey[conveyChoose.index],
+        selected: true
+      })
       console.log(state.convey[conveyChoose.index])
     },
     systemRound (state) {
@@ -243,7 +245,6 @@ export default new Vuex.Store({
               'remainRound',
               state.map[i][j].remainRound - 1
             )
-            console.log({ remain: state.map[i][j].remainRound })
           }
           if (state.map[i][j].isFired) {
             if (
@@ -333,27 +334,17 @@ export default new Vuex.Store({
               row: randomCellList[j].row,
               col: randomCellList[j].col
             })
+            let result = add(
+              state.map[randomCellList[j].row][randomCellList[j].col].code,
+              'fire'
+            )
             Vue.set(
               state.map[randomCellList[j].row],
               randomCellList[j].col,
-              fire
+              mapping[result]
             )
             randomCellList.splice(j, 1)
             break
-          }
-        }
-      }
-      for (let i = 0; i < state.map.length; i++) {
-        for (let j = 0; j < state.map[i].length; j++) {
-          if (
-            state.map[i][j].code === 'stone' &&
-            state.map[i][j].remainRound > 0
-          ) {
-            Vue.set(
-              state.map[i][j],
-              'remainRound',
-              state.map[i][j].remainRound - 1
-            )
           }
         }
       }
