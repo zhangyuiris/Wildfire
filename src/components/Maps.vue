@@ -3,14 +3,14 @@
     <div class="maps">
       <div class="block">
         <div class="combine" :style="combine ? combineStyle : {}" v-show="combine">
-          <img src="../../static/combine.gif" width="68px;" height="68px"/>
+          <img src="static/combine.gif" width="68px;" height="68px"/>
         </div>
         <div v-for="(col, index) in map" :key="index + 'row'" class="row">
           <div v-for="(item, i) in col" :key="i + 'col'" class="col">
             <div v-if="item.code === 'fire'">
               <div class="dock" @click="clickMap(index, i, item.code)">
                 <img
-                  :src="'../../static/' + change + '.png'"
+                  :src="'static/' + change + '.png'"
                   width="100%"
                   height="100%"
                   ondragstart="return false;"
@@ -21,7 +21,7 @@
             <div v-else-if="item.code === 'water' ">
               <div class="dock" @click="clickMap(index, i, item.code)">
                 <img
-                  :src="'../../static/' + changeWater + '.png'"
+                  :src="'static/' + changeWater + '.png'"
                   width="100%"
                   height="100%"
                   ondragstart="return false;"
@@ -35,7 +35,7 @@
             <div v-else>
               <div class="dock" @click="clickMap(index, i, item.code)">
                 <img
-                  :src="'../../static/' + item.code + '.png'"
+                  :src="'static/' + item.code + '.png'"
                   width="100%"
                   height="100%"
                   ondragstart="return false;"

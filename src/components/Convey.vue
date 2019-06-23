@@ -5,7 +5,7 @@
         <div v-for="(item, index) in convey" :key="index" class="block">
           <a @click="clickConvey(index, item.code)"  :style="item.selected ? styles: {}">
             <img
-              :src="'../../static/el-' + item.code + '.png'"
+              :src="'static/el-' + item.code + '.png'"
               height="100%"
               ondragstart="return false;"
               alt
