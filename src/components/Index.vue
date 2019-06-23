@@ -13,15 +13,15 @@
     </el-row>
     <div class="layer" v-if="dialogWinVisible">
       <div class="modal">
-        <div style="padding-top: 380px"  @click="play()">
-          <img src="static/victorybutton.png" width="200px">
+        <div style="padding-top: 380px">
+          <img @click="play()" src="../../static/victorybutton.png" width="200px">
         </div>
       </div>
     </div>
     <div class="layer" v-if="dialogLoseVisible">
       <div class="modal lose">
-        <div style="padding-top: 380px" @click="play()">
-          <img src="static/losebutton.png" width="200px">
+        <div style="padding-top: 380px">
+          <img @click="play()" src="../../static/losebutton.png" width="200px">
         </div>
       </div>
     </div>
