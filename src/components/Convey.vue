@@ -32,15 +32,11 @@ export default {
     }
   },
   methods: {
-    init () {
-      console.log('convey init')
-    },
     clickConvey (index, code) {
       this.$store.commit('setConveyChoose', { index: index, code: code })
     }
   },
   created () {
-    this.init()
     this.$store.commit('refreshConvey')
   },
   destory () {

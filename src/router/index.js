@@ -23,7 +23,6 @@ const router = new Router({
 
 router.beforeEach((to, from, next) => {
   if (from.path === '/index' && to.path === '/') {
-    console.log(store.getters.getWinDialog)
     if (store.getters.getWinDialog === true || store.getters.getLoseDialog === true) {
       next()
     }

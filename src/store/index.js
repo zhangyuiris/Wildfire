@@ -50,6 +50,9 @@ export default new Vuex.Store({
     }
   },
   mutations: {
+    resetRound (state) {
+      state.round = 0
+    },
     openWinDialog (state) {
       state.dialogWinOpen = true
     },
@@ -78,7 +81,6 @@ export default new Vuex.Store({
         }
       }
       state.round++
-      console.log(state.convey)
     },
     restart (state) {
       state = {
@@ -131,7 +133,6 @@ export default new Vuex.Store({
         default:
           break
       }
-      console.log(map)
       state.map = map
     },
     setMapChoose (state, mapChoose) {
@@ -229,7 +230,6 @@ export default new Vuex.Store({
         ...state.convey[conveyChoose.index],
         selected: true
       })
-      console.log(state.convey[conveyChoose.index])
     },
     systemRound (state) {
       let randomCellList = []
@@ -430,7 +430,7 @@ export default new Vuex.Store({
           }
         }
       }
-      const totalCount = Number.parseInt(randomCellList.length.toFixed(0))
+      const totalCount = Number.parseInt((randomCellList.length / 4).toFixed(0))
       console.log(`totalCount: ${totalCount}`)
       for (let i = 0; i < totalCount; i++) {
         let random = Number.parseInt((Math.random() * factorSum).toFixed(0))

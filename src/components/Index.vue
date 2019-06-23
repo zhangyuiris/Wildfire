@@ -47,12 +47,23 @@ export default {
     }
   },
   methods: {
-    init () {
-      console.log('init')
-    },
     click () {
       this.$store.commit('systemRound')
       this.$store.commit('refreshConvey')
+      let map = this.$store.state.map
+      let fire = 0
+      for (let i = 0; i < 6; i++) {
+        for (let j = 0; j < 9; j++) {
+          let col = map[i][j]
+          if (col.code === 'fire') {
+            fire++
+          }
+        }
+      }
+      if (fire === 54) {
+        this.$store.commit('openLoseDialog')
+      }
+      // this.$store.commit('resetRound')
     },
     play () {
       this.$router.push({
@@ -62,10 +73,10 @@ export default {
         }
       })
       this.$store.commit('closeDialog')
+      this.$store.commit('resetConvey')
     }
   },
   created () {
-    this.init()
   }
 }
 </script>

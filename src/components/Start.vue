@@ -26,9 +26,6 @@ export default {
     }
   },
   methods: {
-    init () {
-      console.log('init')
-    },
     start () {
       this.$store.commit('restart')
       this.$router.push('/index')
@@ -48,7 +45,6 @@ export default {
     }
   },
   created () {
-    this.init()
     this.progressBar()
   }
 }
