@@ -15,7 +15,7 @@ export default {
   height: 100vh;
   background-image: url("../static/bg.png");
   background-position: center, center;
-  background-size: 100%, 100%;
+  background-size: cover;
   font-family: Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
