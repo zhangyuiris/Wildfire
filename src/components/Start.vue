@@ -2,14 +2,14 @@
   <el-container class="container">
     <el-row>
       <el-col :span="16" :offset="4" class="animated bounceInDown">
-        <img src="../../static/name.png" width="40%"/>
+        <img src="static/name.png" width="40%"/>
       </el-col>
       <el-col :span="4" :offset="10" style="padding-top: 100px">
         <div class="loading" v-show="!show">
           <div>{{progress}}%</div>
         </div>
         <a @click="start" style="cursor: pointer" v-show="show">
-          <img src="../../static/start.png" width="100%"/>
+          <img src="static/start.png" width="100%"/>
         </a>
       </el-col>
       <el-col :span="4" :offset="10" style="padding-top: 40px">

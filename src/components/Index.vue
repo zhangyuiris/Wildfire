@@ -7,21 +7,21 @@
       </el-col>
       <el-col :span="2">
         <div class="next animated bounceInRight" @click="click()">
-          <img src="../../static/next.png" style="width: 100px;padding-top: 300px">
+          <img src="static/next.png" style="width: 100px;padding-top: 300px">
         </div>
       </el-col>
     </el-row>
     <div class="layer" v-if="dialogWinVisible">
       <div class="modal">
         <div style="padding-top: 380px">
-          <img @click="play()" src="../../static/victorybutton.png" width="200px">
+          <img @click="play()" src="static/victorybutton.png" width="200px">
         </div>
       </div>
     </div>
     <div class="layer" v-if="dialogLoseVisible">
       <div class="modal lose">
         <div style="padding-top: 380px">
-          <img @click="play()" src="../../static/losebutton.png" width="200px">
+          <img @click="play()" src="static/losebutton.png" width="200px">
         </div>
       </div>
     </div>
