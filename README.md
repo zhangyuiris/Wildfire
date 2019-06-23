@@ -2,6 +2,8 @@
 
 ## 2019 Unique Hackday 主题：野火
 
+### 游戏地址：https://zhangyuiris.github.io/Wildfire/#/(GitHub Page有点慢，要多加载一会，第一遍游戏体验不会很好)
+
 ### 队名：
 
 我一点都不想吃火锅烧烤披萨蛋糕小龙虾卤猪蹄锅包肉冰淇淋队
@@ -12,7 +14,7 @@
 
 产品：宋傻岚
 
-技术：章鱼，张豆
+技术：章鱼([zhangyuiris](https://github.com/zhangyuiris))，张豆([kastnerorz](https://github.com/kastnerorz))
 
 ## Part01 选题意义
 
