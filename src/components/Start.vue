@@ -12,6 +12,12 @@
           <img src="../../static/start.png" width="100%"/>
         </a>
       </el-col>
+      <el-col :span="4" :offset="10" style="padding-top: 40px">
+        <div style="display: flex; justify-content: space-around">
+          <a href="https://github.com/zhangyuiris/Wildfire" class="github">GITHUB</a>
+          <a href="https://github.com/zhangyuiris/Wildfire/blob/master/README.md" class="github">README</a>
+        </div>
+      </el-col>
     </el-row>
   </el-container>
 </template>
@@ -65,4 +71,9 @@ export default {
   color #4d7541
   height 108px
   width 100%
+.github
+  color white
+  text-decoration none
+  font-size 16px
+  font-weight 600
 </style>
